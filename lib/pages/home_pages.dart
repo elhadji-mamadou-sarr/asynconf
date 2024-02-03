@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:asynconf/pages/event_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,26 +16,27 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             //   Image.asset("assets/images/rh.png"),
-            SvgPicture.asset("assets/images/logo.svg"),
-            const Padding(padding: EdgeInsets.only(top: 10)),
+            SizedBox(
+              width: 400, height: 400,
+              child: SvgPicture.asset("assets/images/logo.svg"),
+            ),
+            const SizedBox(height: 1),
             const Text("Asynconf 2024",
-              style: TextStyle(fontSize: 42,
-                  fontFamily: "Poppins"
-              ),
+              style: TextStyle(fontSize: 40, fontFamily: "Poppins"),
             ),
             const Text("Salon virtuel de l'informatique du 31 Janvier au 10 Février",
                 style:  TextStyle(fontSize: 20 ),
                 textAlign: TextAlign.center
             ),
-            const Padding(padding: EdgeInsets.only(top: 10)),
+            Padding(padding: EdgeInsets.only(top: 10)),
+
             ElevatedButton(
               style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.lightBlue)
+                  backgroundColor: MaterialStatePropertyAll(Color(0xFF008890))
               ),
               onPressed: () {
                 Navigator.push(
@@ -44,9 +47,7 @@ class HomePage extends StatelessWidget {
                 );
               },
               child: const Text("Voir les planning",
-                style: TextStyle(
-                  fontSize: 24,
-                ),
+                style: TextStyle(fontSize: 20, color: Colors.white ),
               ),
             ),
           ]

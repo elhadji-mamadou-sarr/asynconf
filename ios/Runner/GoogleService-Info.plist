@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDQUxiN0IG-vAjCVHtyGyLWLlMDAVZ2u8Y</string>
+	<key>GCM_SENDER_ID</key>
+	<string>363897438446</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>sn.elhadji.asynconf</string>
+	<key>PROJECT_ID</key>
+	<string>asynconf-2b3ef</string>
+	<key>STORAGE_BUCKET</key>
+	<string>asynconf-2b3ef.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:363897438446:ios:22500b622f3a2f8c6b73ff</string>
+</dict>
+</plist>

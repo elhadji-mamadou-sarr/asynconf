@@ -1,5 +1,7 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventPage extends StatefulWidget {
   const EventPage({super.key});
@@ -11,44 +13,53 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> {
 
   final events = [
-    {
-      "nom" : "Awa Thiaré Sarr",
-      "date" : "02 Février à 10h : 00",
-      "Subject" : "Le code de Lagy",
-      "avatar" : "Lior",
-    },
-
-    {
-      "nom" : "Mamadou Sarr",
-      "date" : "25 Février à 08h : 00",
-      "Subject" : "Le code de Lagy",
-      "avatar" : "ba",
-    }
-
-  ];
+    ];
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ListView.builder(
-          itemCount: events.length,
-          itemBuilder: (context, index ) {
-            final event = events[index];
-            final nom = event["nom"];
-            final date = event['date'];
-
-            return Card(
-                child:  ListTile(
-                  leading:  Image(image: AssetImage("assets/images/ba.png")),
-                  title: Text('$nom'),
-                  subtitle: Text('$date'),
-                  trailing: Icon(Icons.more_vert),
-                )
-            );
-
+      child: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection("Events").snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return CircularProgressIndicator();
           }
 
+          if(!snapshot.hasData){
+            return Text("Aucune conference ");
+          }
+
+          List<dynamic> events = [];
+          snapshot.data!.docs.forEach((element) {
+            events.add(element);
+          });
+
+          return ListView.builder(
+              itemCount: events.length,
+              itemBuilder: (context, index){
+                final event = events[index];
+                final avatar = event['avatar'].toString().toLowerCase();
+                final speaker = event['speaker'];
+                final Timestamp timestamp = event['date'];
+                final String date = DateFormat.yMd().add_jz().format(timestamp.toDate());
+                final subject = event['subject'];
+
+                return Card(
+                  child: ListTile(
+                    leading: Image(image: AssetImage("assets/images/$avatar.png")),
+                    title: Text("$speaker ($date)"),
+                    subtitle: Text("$subject"),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                );
+
+              },
+          );
+              
+              
+        },
       ),
+
     );
 
   }
