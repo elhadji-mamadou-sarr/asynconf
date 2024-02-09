@@ -1,12 +1,15 @@
 
 import 'package:asynconf/pages/add_event_page.dart';
+import 'package:asynconf/pages/edit_event_page.dart';
 import 'package:asynconf/pages/event_pages.dart';
+import 'package:asynconf/pages/my_scafold.dart';
 import 'package:flutter/material.dart';
 import 'package:asynconf/pages/home_pages.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 // ...
+
 
 
 
@@ -42,54 +45,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const [
-            Text("Accueil",
-              style: TextStyle( fontFamily: "Poppins",color: Colors.white),
-            ),
-            Text("Liste des conférences",
-              style: TextStyle( fontFamily: "Poppins",color: Colors.white),
-            ),
-            Text("Formulaire",
-              style: TextStyle( fontFamily: "Poppins",color: Colors.white),
-            )
-          ][_currentIndex],
-          backgroundColor: Color(0xFF008890),
-        ),
+      home: MyScaffold(
+        currentIndex: _currentIndex,
+        setCurrentIndex: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         body: [
-            HomePage(),
-            EventPage(),
-            AddEventPage()
+          const HomePage(),
+          const EventPage(),
+          const AddEventPage(),
         ][_currentIndex],
-
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) => setCurrentIndex(index),
-          selectedItemColor: Color(0xFF008890),
-          type: BottomNavigationBarType.fixed,
-          unselectedItemColor: Colors.grey,
-
-          elevation: 20,  iconSize: 24,
-
-          items: const  [
-            BottomNavigationBarItem(
-              icon:  Icon(Icons.home),
-              label: 'Accueil',
-            ),
-
-            BottomNavigationBarItem(
-              icon:  Icon(Icons.calendar_month),
-              label: 'Planning',
-            ),
-
-            BottomNavigationBarItem(
-              icon:  Icon(Icons.add_circle_outline),
-              label: 'Ajout',
-            ),
-
-          ],
-        ),
       ),
     );
   }

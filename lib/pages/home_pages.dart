@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget {
               child: SvgPicture.asset("assets/images/logo.svg"),
             ),
             const SizedBox(height: 1),
+
             const Text("Asynconf 2024",
               style: TextStyle(fontSize: 40, fontFamily: "Poppins"),
             ),
@@ -42,7 +43,7 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => EventPage()
+                        pageBuilder: (_, __, ___) => const EventPage()
                     )
                 );
               },

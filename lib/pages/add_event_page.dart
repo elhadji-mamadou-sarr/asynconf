@@ -3,6 +3,8 @@ import 'package:date_field/date_field.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'event_pages.dart';
+
 class AddEventPage extends StatefulWidget {
   const AddEventPage({super.key});
 
@@ -10,13 +12,14 @@ class AddEventPage extends StatefulWidget {
   State<AddEventPage> createState() => _AddEventPageState();
 }
 
+const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 class _AddEventPageState extends State<AddEventPage> {
 
   final _formKey = GlobalKey<FormState>();
 
   final confNameController = TextEditingController();
   final speakerNameController = TextEditingController();
-  String selectedConfType = "Show";
+  String selectedConfType = list.first;
   DateTime selectedConfDate = DateTime.now();
 
   @override
@@ -30,11 +33,12 @@ class _AddEventPageState extends State<AddEventPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.only(right: 20, left: 20, top: 60),
       child: Form(
           key: _formKey,
           child: Column(
             children: [
+
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: "Nom du Conference",
@@ -68,12 +72,32 @@ class _AddEventPageState extends State<AddEventPage> {
                 },
                 controller: speakerNameController,
               ),
+/*
 
               Container(
                 margin: const EdgeInsets.only(top: 15),
-                child: DropdownButtonFormField<String>(
+                width: double.maxFinite,
+                child: DropdownMenu<String>(
+                  initialSelection: list.first,
+                  onSelected: (String? value) {
+                    setState(() {
+                      selectedConfType = value!;
+                    });
+                    },
+                  dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String value) {
+                    return DropdownMenuEntry<String>(value: value, label: value);
+                  }).toList(),
+
+                ),
+              ),
+
+
+
+
+
+                DropdownButtonFormField<String>(
                   items: const [
-                   // DropdownMenuItem(child: Text("data"))
+                    //DropdownMenuItem(value: "show;", child: Text("data") )
                   ],
                   value: selectedConfType, // correction ici
                   onChanged: (value) {
@@ -85,7 +109,7 @@ class _AddEventPageState extends State<AddEventPage> {
                     border: OutlineInputBorder(),
                   ),
                 ),
-              ),
+*/
 
               const Padding(padding: EdgeInsets.only(top: 15)),
 
@@ -119,15 +143,19 @@ class _AddEventPageState extends State<AddEventPage> {
                       FocusScope.of(context).requestFocus(FocusNode());
 
                       CollectionReference eventRef = FirebaseFirestore.instance.collection("Events");
-
                       eventRef.add({
                         "speaker": speakerName,
                         "date": selectedConfDate,
                         "subject": confName,
                         "avatar": "ba",
                       });
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => EventPage()),
+                      );
 
                     }
+
                   },
                   child: Text("Envoyer", style: TextStyle(fontSize: 20, color: Colors.white)),
                   style: const ButtonStyle(
