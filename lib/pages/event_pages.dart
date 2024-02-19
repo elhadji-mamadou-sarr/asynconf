@@ -1,4 +1,5 @@
 
+import 'package:asynconf/models/event.dart';
 import 'package:asynconf/pages/edit_event_page.dart';
 import 'package:asynconf/pages/show_event_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,20 +33,20 @@ class _EventPageState extends State<EventPage> {
             return const Text("Aucune conference ");
           }
 
-          List<dynamic> events = [];
-          snapshot.data!.docs.forEach((element) {
-            events.add(element);
+          List<Event> events = [];
+          snapshot.data!.docs.forEach((data) {
+            events.add(Event.fromData(data));
           });
 
           return ListView.builder(
               itemCount: events.length,
               itemBuilder: (context, index){
                 final event = events[index];
-                final avatar = event['avatar'].toString().toLowerCase();
-                final speaker = event['speaker'];
-                final Timestamp timestamp = event['date'];
+                final avatar = event.avatar.toString().toLowerCase();
+                final speaker = event.speaker;
+                final Timestamp timestamp = event.timestamp;
                 final String date = DateFormat.yMd().add_jz().format(timestamp.toDate());
-                final subject = event['subject'];
+                final subject = event.subject;
 
                 return Card(
                   child: ListTile(
@@ -57,7 +58,7 @@ class _EventPageState extends State<EventPage> {
                       Navigator.pop(context);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ShowEventPage(event : event)),
+                        MaterialPageRoute(builder: (context) => ShowEventPage(event)),
                       );
                     },
                     trailing: PopupMenuButton(
@@ -71,7 +72,7 @@ class _EventPageState extends State<EventPage> {
                               Navigator.pop(context);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => EditEventPage(event : event)),
+                                MaterialPageRoute(builder: (context) => EditEventPage(event)),
                               );
                             },
                           ),

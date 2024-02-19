@@ -19,6 +19,7 @@ class _AddEventPageState extends State<AddEventPage> {
 
   final confNameController = TextEditingController();
   final speakerNameController = TextEditingController();
+
   String selectedConfType = list.first;
   DateTime selectedConfDate = DateTime.now();
 

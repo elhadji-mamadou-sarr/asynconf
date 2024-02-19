@@ -1,5 +1,6 @@
 
 import 'package:asynconf/pages/my_drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:asynconf/pages/add_event_page.dart';
 import 'package:asynconf/pages/edit_event_page.dart';
@@ -11,6 +12,10 @@ class MyScaffold extends StatelessWidget {
   final int currentIndex;
   final Function(int) setCurrentIndex;
   final Widget body;
+
+  void signUserOut(){
+    FirebaseAuth.instance.signOut();
+  }
 
   const MyScaffold({
     Key? key,
@@ -30,7 +35,7 @@ class MyScaffold extends StatelessWidget {
 
       appBar: AppBar(
 
-
+        backgroundColor: const Color(0xFF008890),
         title: [
           const Text(
             "Accueil",
@@ -54,7 +59,9 @@ class MyScaffold extends StatelessWidget {
           ),
 
         ][currentIndex],
-        backgroundColor: const Color(0xFF008890),
+
+        actions: [IconButton(onPressed: signUserOut, icon: Icon(Icons.logout))],
+
       ),
 
       body: body,

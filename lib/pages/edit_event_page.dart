@@ -1,3 +1,4 @@
+import 'package:asynconf/models/event.dart';
 import 'package:asynconf/pages/event_pages.dart';
 import 'package:asynconf/pages/my_scafold.dart';
 import 'package:date_field/date_field.dart';
@@ -6,9 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EditEventPage extends StatefulWidget {
-  final DocumentSnapshot event;
-
-  const EditEventPage({Key? key, required this.event}) : super(key: key);
+  final Event event;
+  const EditEventPage( this.event, {Key? key, }) : super(key: key);
 
   @override
   _EditEventPageState createState() => _EditEventPageState();
@@ -24,10 +24,10 @@ class _EditEventPageState extends State<EditEventPage> {
   @override
   void initState() {
     super.initState();
-    confNameController = TextEditingController(text: widget.event['subject']);
-    speakerNameController = TextEditingController(text: widget.event['speaker']);
-    selectedConfType = widget.event['avatar'];
-    selectedConfDate = (widget.event['date'] as Timestamp).toDate();
+    confNameController = TextEditingController(text: widget.event.subject);
+    speakerNameController = TextEditingController(text: widget.event.speaker);
+    selectedConfType = widget.event.avatar;
+    selectedConfDate = (widget.event.timestamp as Timestamp).toDate();
   }
 
   @override
@@ -104,7 +104,6 @@ class _EditEventPageState extends State<EditEventPage> {
               firstDate: DateTime.now().add(const Duration(days: 10)),
               lastDate: DateTime.now().add(const Duration(days: 40)),
               initialPickerDateTime: selectedConfDate,
-
               onChanged: (DateTime? value) {
                 selectedConfDate = value!;
               },
@@ -116,11 +115,9 @@ class _EditEventPageState extends State<EditEventPage> {
             SizedBox(
               height: 50,
               width: double.infinity,
-
               child:ElevatedButton(
 
                 onPressed: () async {
-
                   //if (_formKey.currentState!.validate()) {
                     final confName = confNameController.text;
                     final speakerName = speakerNameController.text;
